@@ -6,9 +6,9 @@ end
 
 
 function file_path()
-    fid = args["fid"]
-    path = string.sub(fid, 1, 1) .. "/" .. string.sub(fid, 2, 3) .. "/" .. fid
-    location_path = "/data" .. "/" .. path
+    local fid = args["fid"]
+    local path = string.sub(fid, 1, 1) .. "/" .. string.sub(fid, 2, 3) .. "/" .. fid
+    local location_path = "/data" .. "/" .. path
     return location_path
 end
 

@@ -1,5 +1,5 @@
-package.path = '/usr/local/openresty/lualib/resty/?.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua;'
-package.cpath = '/usr/local/openresty/lualib/?.so;/usr/local/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/loadall.so;./?.so;'
+package.path = '/usr/local/openresty/lualib/resty/?.lua;'
+package.cpath = '/usr/local/openresty/lualib/?.so;'
 
 local upload = require "upload"
 local cjson = require "cjson"
@@ -19,8 +19,8 @@ local response = {}
 
 
 function random_filename()
-    t = ngx.req.start_time()
-    name = ngx.md5(t)
+    local t = ngx.req.start_time()
+    local name = ngx.md5(t)
     response["fid"] = name
     response["upload_time"] = t
     return name
@@ -28,9 +28,9 @@ end
 
 
 function file_path(random_filename)
-    path1 = string.sub(random_filename, 1, 1)
-    path2 = string.sub(random_filename, 2, 3)
-    p = osfilepath..path1.."/"..path2.."/"
+    local path1 = string.sub(random_filename, 1, 1)
+    local path2 = string.sub(random_filename, 2, 3)
+    local p = osfilepath..path1.."/"..path2.."/"
     return p
 end
 
@@ -57,14 +57,14 @@ while true do
     end
     if typ == "header" then
         if res[1] ~= "Content-Type" then
-            actual_name = get_actual_filename(res[2])
+            local actual_name = get_actual_filename(res[2])
             response["filename"] = actual_name
-            random_filename = random_filename()
+            local random_filename = random_filename()
             if random_filename then
                 i=i+1
-                file_path = file_path(random_filename)
+                local file_path = file_path(random_filename)
                 os.execute("mkdir -p "..file_path)
-                filepath = file_path .. random_filename
+                local filepath = file_path .. random_filename
                 file , error = io.open(filepath,"w+")
                 if not file then
 
@@ -80,7 +80,7 @@ while true do
         end
     elseif typ == "body" then
         if file then
-            filelen= filelen + tonumber(string.len(res))    
+            local filelen= filelen + tonumber(string.len(res))    
             file:write(res)
         else
         end
