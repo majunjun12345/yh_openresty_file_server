@@ -1,8 +1,4 @@
-local args, err = ngx.req.get_uri_args()
-
-if err == "truncated" then
-    ngx.say("para err")
-end
+local args= ngx.req.get_uri_args()
 
 
 function file_path()
