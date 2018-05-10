@@ -58,6 +58,7 @@ while true do
     if typ == "header" then
         if res[1] ~= "Content-Type" then
             local actual_name = get_actual_filename(res[2])
+            ngx.log(ngx.NOTICE,"[lua_file_server] upoload filename:", actual_name)
             response["filename"] = actual_name
             local random_filename = random_filename()
             if random_filename then
@@ -72,7 +73,8 @@ while true do
                     response["upload_status"] = err
                     --ngx.say(cjson.encode(response))
                     --ngx.say("failed to open file ")
-                    
+                    ngx.log(ngx.NOTICE,"[lua_file_server] upoload, err:", err)
+
                     return
                 end
             else
@@ -92,7 +94,7 @@ while true do
             response["upload_status"] = "upload_success"
             --ngx.say(cjson.encode(response))
             --ngx.say("file upload success")
-
+            ngx.log(ngx.NOTICE,"[lua_file_server] upoload, success")
         end
     elseif typ == "eof" then
         break
@@ -105,7 +107,7 @@ if i==0 then
     response["upload_status"] = "please upload at least one file!"
     --ngx.say(cjson.encode(response))
     --ngx.say("please upload at least one file!")
-
+    ngx.log(ngx.NOTICE,"[lua_file_server] please upload at least one file!")
     return
 end
 
