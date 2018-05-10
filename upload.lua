@@ -50,7 +50,7 @@ while true do
 
         response["fid"] = "None"
         response["upload_status"] = err
-        ngx.say(cjson.encode(response))
+        --ngx.say(cjson.encode(response))
         --ngx.say("failed to read: ", err)
         
         return
@@ -104,6 +104,7 @@ end
 if i==0 then
 
     response["fid"] = "None"
+    response["filename"] = "None"
     response["upload_status"] = "please upload at least one file!"
     --ngx.say(cjson.encode(response))
     --ngx.say("please upload at least one file!")
