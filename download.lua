@@ -1,16 +1,30 @@
+package.path = '/usr/local/openresty/nginx/lua/?.lua'
+
+
+local config = require "config"
 local args= ngx.req.get_uri_args()
 
 
 function file_path()
     local fid = args["fid"]
-    local path = string.sub(fid, 1, 1) .. "/" .. string.sub(fid, 2, 3) .. "/" .. fid
-    local location_path = "/data" .. "/" .. path
-    return location_path
+    if(string.len(fid) >= 16 and type(fid) == "string")
+    then
+        local path = string.sub(fid, 1, 1) .. "/" .. string.sub(fid, 2, 3) .. "/" .. fid
+        local location_path = config.DOWNLOAD_PATH .. path
+        return location_path
+    else
+        ngx.log(ngx.NOTICE,"[lua_file_server] PARA ERR")
+    end
 end
 
 
-location_path = file_path()
-if location_path then 
-    ngx.exec(location_path)
-    return
+function redirect()
+    location_path = file_path()
+    if location_path then 
+        ngx.exec(location_path)
+        return
+    end
 end
+
+
+redirect()

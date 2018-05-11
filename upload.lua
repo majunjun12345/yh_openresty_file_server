@@ -1,8 +1,9 @@
-package.path = '/usr/local/openresty/lualib/resty/?.lua;'
+package.path = '/usr/local/openresty/lualib/resty/?.lua;/usr/local/openresty/nginx/lua/?.lua'
 package.cpath = '/usr/local/openresty/lualib/?.so;'
 
 local upload = require "upload"
 local cjson = require "cjson"
+local config = require "config"
 
 local chunk_size = 4096
 local form = upload:new(chunk_size)
@@ -12,7 +13,7 @@ form:set_timeout(0) -- 1 sec
 local filename
 
 
-local osfilepath = "/home/majun/data/"
+--local osfilepath = "/home/majun/data/"
 
 
 local response = {}
@@ -30,7 +31,7 @@ end
 function file_path(random_filename)
     local path1 = string.sub(random_filename, 1, 1)
     local path2 = string.sub(random_filename, 2, 3)
-    local p = osfilepath..path1.."/"..path2.."/"
+    local p = config.UPLOAD_PATH..path1.."/"..path2.."/"
     return p
 end
 
@@ -50,9 +51,7 @@ while true do
 
         response["fid"] = "None"
         response["upload_status"] = err
-        --ngx.say(cjson.encode(response))
-        --ngx.say("failed to read: ", err)
-        
+        ngx.log(ngx.NOTICE,"[lua_file_server] ERR:", err)
         return
     end
     if typ == "header" then
