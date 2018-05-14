@@ -1,3 +1,16 @@
+--[[
+@api {post} /api/upload 文件上传
+@apiName upload
+@apiGroup api
+@apiParam {string} file 本地文件路径
+@apiSuccess {json} file_info 返回上传文件信息.
+@apiSuccess {string} file_info.filename 文件名.
+@apiSuccess {string} file_info.fid 文件id.
+@apiSuccess {string} file_info.status 文件上传状态.
+@apiSuccess {string} file_info.time 文件上传时间.
+--]]
+
+
 package.path = '/usr/local/openresty/lualib/resty/?.lua;/usr/local/openresty/nginx/lua/?.lua'
 package.cpath = '/usr/local/openresty/lualib/?.so;'
 
@@ -56,6 +69,7 @@ while true do
     end
     if typ == "header" then
         if res[1] ~= "Content-Type" then
+            ngx.log(ngx.NOTICE,"RES[2]:", res[2])
             local actual_name = get_actual_filename(res[2])
             ngx.log(ngx.NOTICE,"[lua_file_server] upoload filename:", actual_name)
             response["filename"] = actual_name

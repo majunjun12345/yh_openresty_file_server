@@ -1,0 +1,16 @@
+{
+  "name": "文件上传与下载",
+  "version": "0.0.0",
+  "description": "上传与下载",
+  "title": "文件上传与下载",
+  "url": "http://127.0.0.1",
+  "sampleUrl": false,
+  "defaultVersion": "0.0.0",
+  "apidoc": "0.3.0",
+  "generator": {
+    "name": "apidoc",
+    "time": "2018-05-14T09:44:27.593Z",
+    "url": "http://apidocjs.com",
+    "version": "0.17.6"
+  }
+}

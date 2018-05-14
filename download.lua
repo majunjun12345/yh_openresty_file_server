@@ -1,3 +1,11 @@
+--[[
+@api {get} /api/download 下载文件, 返回文件数据流
+@apiName download
+@apiGroup api
+@apiParam {string} fid 文件fid.
+--]]
+
+
 package.path = '/usr/local/openresty/nginx/lua/?.lua'
 
 
